@@ -37,6 +37,7 @@ class VideoPlayerView @JvmOverloads constructor(
                     }
                     setOnVideoSizeChangedListener { mp, width, height ->
                         Log.d(TAG, "Size changed width $width height $height")
+                        videoView.videoSurfaceView.holder.setFixedSize(width, height)
                     }
                     prepareAsync()
                 }

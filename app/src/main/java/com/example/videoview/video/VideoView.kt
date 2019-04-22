@@ -8,7 +8,7 @@ class VideoView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr){
 
-    private lateinit var videoSurfaceView: VideoSurfaceView
+    lateinit var videoSurfaceView: VideoSurfaceView
 
     fun prepareDisplay (callback: VideoSurfaceView.SimpleCallback) {
         if (::videoSurfaceView.isInitialized) {
@@ -20,7 +20,7 @@ class VideoView @JvmOverloads constructor(
 
     private fun createDisplay(callback: VideoSurfaceView.SimpleCallback): VideoSurfaceView {
         return VideoSurfaceView(context).apply {
-            val lp = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
+            val lp = LayoutParams(200, 500)
             layoutParams = lp
             holder.addCallback(callback)
         }.also {
