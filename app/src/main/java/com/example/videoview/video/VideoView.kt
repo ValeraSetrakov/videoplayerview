@@ -3,6 +3,7 @@ package com.example.videoview.video
 import android.content.Context
 import android.util.AttributeSet
 import android.util.Log
+import android.view.SurfaceHolder
 import android.widget.FrameLayout
 
 
@@ -13,8 +14,29 @@ class VideoView @JvmOverloads constructor(
 ) : FrameLayout(context, attrs, defStyleAttr){
 
     lateinit var videoSurfaceView: VideoSurfaceView
+    lateinit var videoPlayer: VideoPlayer
 
-    fun prepareDisplay (callback: VideoSurfaceView.SimpleCallback) {
+    /** Prepare video, create display fo him, resize display by video size */
+    fun playVideo(video: String) {
+        if (!::videoPlayer.isInitialized)
+            videoPlayer = VideoPlayer()
+        prepareDisplay(object: VideoSurfaceView.SimpleCallback(){
+            override fun surfaceCreated(holder: SurfaceHolder?) {
+                super.surfaceCreated(holder)
+                videoPlayer.run {
+                    reset()
+                    setDisplay(holder)
+                    setDataSource(video)
+                    setOnVideoSizeChangedListener { _, width, height ->
+                        setVideoSize(width, height)
+                    }
+                    prepareAsync()
+                }
+            }
+        })
+    }
+
+    private fun prepareDisplay (callback: VideoSurfaceView.SimpleCallback) {
         if (::videoSurfaceView.isInitialized) {
             videoSurfaceView.holder.surface.release()
             removeView(videoSurfaceView)
@@ -24,8 +46,6 @@ class VideoView @JvmOverloads constructor(
 
     private fun createDisplay(callback: VideoSurfaceView.SimpleCallback): VideoSurfaceView {
         return VideoSurfaceView(context).apply {
-            val lp = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
-            layoutParams = lp
             holder.addCallback(callback)
         }.also {
             addView(it)
@@ -53,13 +73,6 @@ class VideoView @JvmOverloads constructor(
                 videoSurfaceView.measure(MeasureSpec.makeMeasureSpec(videoSurfaceWidth.toInt(), MeasureSpec.EXACTLY),
                     MeasureSpec.makeMeasureSpec(videoSurfaceHeight.toInt(), MeasureSpec.EXACTLY))
 
-                Log.d(TAG, """
-                    On measure
-                    videoSurfaceView measuredWidth ${videoSurfaceView.measuredWidth}
-                    videoSurfaceView measuredHeight ${videoSurfaceView.measuredHeight}
-                    videoSurfaceView surface frame ${videoSurfaceView.holder.surfaceFrame}
-                """.trimIndent())
-
             }
         }
     }
@@ -76,14 +89,6 @@ class VideoView @JvmOverloads constructor(
             val videoSurfaceBottom = videoSurfaceTop + videoSurfaceHeight
 
             videoSurfaceView.layout(videoSurfaceLeft, videoSurfaceTop, videoSurfaceRight, videoSurfaceBottom)
-
-            Log.d(TAG, """
-                On layout
-                videoSurfaceView videoSurfaceLeft $videoSurfaceLeft
-                videoSurfaceView videoSurfaceTop $videoSurfaceTop
-                videoSurfaceView videoSurfaceRight $videoSurfaceRight
-                videoSurfaceView videoSurfaceBottom $videoSurfaceBottom
-            """.trimIndent())
         }
 
     }

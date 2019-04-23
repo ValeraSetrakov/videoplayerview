@@ -18,11 +18,4 @@ class VideoSurfaceView @JvmOverloads constructor(
         override fun surfaceDestroyed(holder: SurfaceHolder?) {}
         override fun surfaceCreated(holder: SurfaceHolder?) {}
     }
-
-//    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-//        if (videoWidth == 0 || videoHeight == 0)
-//            super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-//        else
-//            setMeasuredDimension(videoWidth, videoHeight)
-//    }
 }
