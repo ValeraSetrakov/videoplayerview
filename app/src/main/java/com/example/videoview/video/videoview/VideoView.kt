@@ -1,10 +1,10 @@
-package com.example.videoview.video
+package com.example.videoview.video.videoview
 
 import android.content.Context
 import android.util.AttributeSet
-import android.util.Log
 import android.view.SurfaceHolder
 import android.widget.FrameLayout
+import com.example.videoview.video.videoview.videoplayer.VideoPlayer
 
 
 private val TAG = VideoView::class.java.simpleName

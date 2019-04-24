@@ -1,8 +1,8 @@
-package com.example.videoview.video.controller
+package com.example.videoview.video.videocontrollerview
 
 import android.content.Context
 import android.util.AttributeSet
-import com.example.videoview.video.VideoPlayer
+import com.example.videoview.video.videoview.videoplayer.VideoPlayer
 import com.example.videoview.video.view.LayoutDelegate
 
 abstract class VideoControllerView @JvmOverloads constructor(

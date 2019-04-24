@@ -1,4 +1,4 @@
-package com.example.videoview.video
+package com.example.videoview.video.videoview
 
 import android.content.Context
 import android.util.AttributeSet

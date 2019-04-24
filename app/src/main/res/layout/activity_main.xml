@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <com.example.videoview.video.VideoPlayerView
+    <com.example.videoview.video.videoplayerview.VideoPlayerView
             android:id="@+id/video_player_view"
             android:background="#55000000"
             app:layout_constraintStart_toStartOf="parent"

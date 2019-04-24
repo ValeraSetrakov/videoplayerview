@@ -3,7 +3,7 @@ package com.example.videoview
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
-import com.example.videoview.video.VideoPlayerView
+import com.example.videoview.video.videoplayerview.VideoPlayerView
 
 class MainActivity : AppCompatActivity() {
 

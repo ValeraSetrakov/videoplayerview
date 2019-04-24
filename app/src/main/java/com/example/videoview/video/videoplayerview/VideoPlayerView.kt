@@ -1,14 +1,15 @@
-package com.example.videoview.video
+package com.example.videoview.video.videoplayerview
 
 import android.content.Context
 import android.graphics.Color
 import android.util.AttributeSet
-import android.util.Log
 import android.widget.FrameLayout
-import com.example.videoview.video.controller.*
-import com.example.videoview.video.controller.delegate.ButtonControllersDelegate
-import com.example.videoview.video.controller.delegate.LoadVideoControllerDelegate
-import com.example.videoview.video.controller.delegate.ProgressControllerDelegate
+import com.example.videoview.video.videocontrollerview.ComplexVideoControllerView
+import com.example.videoview.video.videocontrollerview.delegate.ButtonControllersDelegate
+import com.example.videoview.video.videocontrollerview.delegate.LoadVideoControllerDelegate
+import com.example.videoview.video.videocontrollerview.delegate.ProgressControllerDelegate
+import com.example.videoview.video.videoview.videoplayer.VideoPlayer
+import com.example.videoview.video.videoview.VideoView
 
 class VideoPlayerView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
@@ -33,7 +34,8 @@ class VideoPlayerView @JvmOverloads constructor(
         addView(it)
     }
 
-    private val videoControllerView = ComplexVideoControllerView(context).apply {
+    private val videoControllerView = ComplexVideoControllerView(context)
+        .apply {
         layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
         this.videoPlayer = this@VideoPlayerView.videoPlayer
     }.also {

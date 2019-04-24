@@ -2,14 +2,13 @@ package com.example.videoview.video.controller
 
 import android.content.Context
 import android.util.AttributeSet
-import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
 import com.example.videoview.R
-import com.example.videoview.video.VideoPlayer
 import com.example.videoview.video.VideoProgressView
+import com.example.videoview.video.videocontrollerview.VideoControllerView
 
 private val TAG = SimpleVideoControllerView::class.java.simpleName
 

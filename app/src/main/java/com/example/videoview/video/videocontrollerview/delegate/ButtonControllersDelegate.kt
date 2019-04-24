@@ -1,23 +1,27 @@
-package com.example.videoview.video.controller.delegate
+package com.example.videoview.video.videocontrollerview.delegate
 
 import android.view.View
 import android.widget.ImageView
 import com.example.videoview.R
-import com.example.videoview.video.VideoPlayer
-import com.example.videoview.video.controller.VideoControllerView
+import com.example.videoview.video.videoview.videoplayer.BaseVideoPlayer
+import com.example.videoview.video.videoview.videoplayer.VideoPlayer
+import com.example.videoview.video.videocontrollerview.VideoControllerView
 
 class ButtonControllersDelegate (parent: VideoControllerView):
     VideoControllerDelegate(parent = parent) {
 
+    private val context = parent.context
+    private var videoStep = 0
+
     init {
         videoPlayer.apply {
-            addOnStartVideoPlayerListener(object : VideoPlayer.OnStartVideoPlayerListener {
+            addOnStartVideoPlayerListener(object : BaseVideoPlayer.OnStartVideoPlayerListener {
                 override fun onStartVideoPlayer(mp: VideoPlayer) {
                     pauseButton.visibility = View.VISIBLE
                     playButton.visibility = View.GONE
                 }
             })
-            addOnPauseVideoPlayerListener(object: VideoPlayer.OnPauseVideoPlayerListener {
+            addOnPauseVideoPlayerListener(object: BaseVideoPlayer.OnPauseVideoPlayerListener {
                 override fun onPauseVideoPlayer(mp: VideoPlayer) {
                     playButton.visibility = View.VISIBLE
                     pauseButton.visibility = View.GONE
@@ -27,11 +31,15 @@ class ButtonControllersDelegate (parent: VideoControllerView):
                 playButton.visibility = View.VISIBLE
                 pauseButton.visibility = View.GONE
             }
+            setOnPreparedListener {
+                val duration = it.duration
+                videoStep = duration / 10
+            }
         }
 
     }
 
-    private val playButton: ImageView = ImageView(parent.context).apply {
+    private val playButton: ImageView = ImageView(context).apply {
         setImageResource(R.drawable.ic_play)
         setOnClickListener {
             videoPlayer.start()
@@ -40,7 +48,7 @@ class ButtonControllersDelegate (parent: VideoControllerView):
         addView(it)
     }
 
-    private val pauseButton = ImageView(parent.context).apply {
+    private val pauseButton = ImageView(context).apply {
         setImageResource(R.drawable.ic_pause)
         setOnClickListener {
             videoPlayer.pause()
@@ -50,7 +58,25 @@ class ButtonControllersDelegate (parent: VideoControllerView):
         addView(it)
     }
 
-    private val buttons = listOf(playButton, pauseButton)
+    private val nextButton = ImageView(context).apply {
+        setImageResource(R.drawable.ic_next)
+        setOnClickListener {
+            videoPlayer.seekToNext()
+        }
+    }.also {
+        addView(it)
+    }
+
+    private val prevButton = ImageView(context).apply {
+        setImageResource(R.drawable.ic_previous)
+        setOnClickListener {
+            videoPlayer.seekToPrev()
+        }
+    }.also {
+        addView(it)
+    }
+
+    private val buttons = listOf(playButton, pauseButton, nextButton, prevButton)
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
@@ -77,6 +103,11 @@ class ButtonControllersDelegate (parent: VideoControllerView):
         val centerX = width / 2
         val centerY = height / 2
 
+        val centerFirstQuarterX = centerX / 2
+        val centerFirstQuarterY = centerY / 2
+        val centerFirthQuarterX = width * 0.75
+        val centerFirthQuarterY = (centerY + centerFirstQuarterY) / 2
+
         val playButtonWidth = playButton.measuredWidth
         val playButtonHeight = playButton.measuredHeight
 
@@ -93,6 +124,26 @@ class ButtonControllersDelegate (parent: VideoControllerView):
         val pauseButtonBottom = playButtonBottom
 
         pauseButton.layout(pauseButtonLeft, pauseButtonTop, pauseButtonRight, pauseButtonBottom)
+
+        val prevButtonWidth = prevButton.measuredWidth
+        val prevButtonHeight = prevButton.measuredHeight
+
+        val prevButtonLeft = centerFirstQuarterX - prevButtonWidth / 2
+        val prevButtonTop = centerY - prevButtonHeight / 2
+        val prevButtonRight = prevButtonLeft + prevButtonWidth
+        val prevButtonBottom =  prevButtonTop + prevButtonHeight
+
+        prevButton.layout(prevButtonLeft, prevButtonTop, prevButtonRight, prevButtonBottom)
+
+        val nextButtonWidth = nextButton.measuredWidth
+        val nextButtonHeight = nextButton.measuredHeight
+
+        val nextButtonLeft = centerFirthQuarterX - nextButtonWidth / 2
+        val nextButtonTop = centerY - nextButtonHeight / 2
+        val nextButtonRight = nextButtonLeft + nextButtonWidth
+        val nextButtonBottom =  nextButtonTop + nextButtonHeight
+
+        nextButton.layout(nextButtonLeft.toInt(), nextButtonTop, nextButtonRight.toInt(), nextButtonBottom)
     }
 
 }

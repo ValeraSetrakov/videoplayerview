@@ -1,10 +1,11 @@
-package com.example.videoview.video.controller.delegate
+package com.example.videoview.video.videocontrollerview.delegate
 
+import android.util.Log
 import android.view.View
 import android.widget.FrameLayout
-import com.example.videoview.video.VideoPlayer
+import com.example.videoview.video.videoview.videoplayer.VideoPlayer
 import com.example.videoview.video.VideoProgressView
-import com.example.videoview.video.controller.VideoControllerView
+import com.example.videoview.video.videocontrollerview.VideoControllerView
 
 private val TAG = ProgressControllerDelegate::class.java.simpleName
 
@@ -26,6 +27,9 @@ class ProgressControllerDelegate(parent: VideoControllerView):
             })
             setOnCompletionListener {
                 progressBar.current = progressBar.max
+            }
+            setOnSeekCompleteListener {
+                Log.d(TAG, "Current position after seek ${it.currentPosition}")
             }
         }
     }

@@ -1,4 +1,4 @@
-package com.example.videoview.video.controller
+package com.example.videoview.video.videocontrollerview
 
 import android.content.Context
 import android.util.AttributeSet

@@ -5,7 +5,7 @@ import android.util.AttributeSet
 import android.view.Gravity
 import android.view.View
 import android.widget.ProgressBar
-import com.example.videoview.video.VideoPlayer
+import com.example.videoview.video.videocontrollerview.VideoControllerView
 
 open class LoadVideoControllerView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0

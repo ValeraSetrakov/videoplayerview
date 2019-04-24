@@ -1,7 +1,7 @@
-package com.example.videoview.video.controller.delegate
+package com.example.videoview.video.videocontrollerview.delegate
 
-import com.example.videoview.video.VideoPlayer
-import com.example.videoview.video.controller.VideoControllerView
+import com.example.videoview.video.videoview.videoplayer.VideoPlayer
+import com.example.videoview.video.videocontrollerview.VideoControllerView
 import com.example.videoview.video.view.SimpleDelegate
 
 open class VideoControllerDelegate(parent: VideoControllerView):

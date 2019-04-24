@@ -1,18 +1,19 @@
-package com.example.videoview.video.controller.delegate
+package com.example.videoview.video.videocontrollerview.delegate
 
 import android.view.Gravity
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ProgressBar
-import com.example.videoview.video.VideoPlayer
-import com.example.videoview.video.controller.VideoControllerView
+import com.example.videoview.video.videoview.videoplayer.BaseVideoPlayer
+import com.example.videoview.video.videoview.videoplayer.VideoPlayer
+import com.example.videoview.video.videocontrollerview.VideoControllerView
 
 class LoadVideoControllerDelegate(parent: VideoControllerView):
     VideoControllerDelegate(parent = parent) {
 
     init {
         videoPlayer.apply {
-            addOnStartPrepareVideoPlayerListener(object: VideoPlayer.OnStartPrepareVideoPlayerListener {
+            addOnStartPrepareVideoPlayerListener(object: BaseVideoPlayer.OnStartPrepareVideoPlayerListener {
                 override fun onStartPrepareVideoPlayerListener(vp: VideoPlayer) {
                     startLoad()
                 }
