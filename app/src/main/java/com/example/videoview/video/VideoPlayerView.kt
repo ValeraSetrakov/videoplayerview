@@ -5,10 +5,10 @@ import android.graphics.Color
 import android.util.AttributeSet
 import android.util.Log
 import android.widget.FrameLayout
-import com.example.videoview.video.controller.ComplexVideoControllerView
-import com.example.videoview.video.controller.LoadVideoControllerDelegate
-import com.example.videoview.video.controller.LoadVideoControllerView
-import com.example.videoview.video.controller.SimpleVideoControllerView
+import com.example.videoview.video.controller.*
+import com.example.videoview.video.controller.delegate.ButtonControllersDelegate
+import com.example.videoview.video.controller.delegate.LoadVideoControllerDelegate
+import com.example.videoview.video.controller.delegate.ProgressControllerDelegate
 
 class VideoPlayerView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
@@ -21,7 +21,6 @@ class VideoPlayerView @JvmOverloads constructor(
     private val videoPlayer = VideoPlayer().apply {
         setScreenOnWhilePlaying(true)
         setOnPreparedListener {
-            Log.d(TAG, "Prepare video")
             start()
         }
     }
@@ -40,6 +39,8 @@ class VideoPlayerView @JvmOverloads constructor(
     }.also {
         addView(it)
         it.addDelegate(LoadVideoControllerDelegate(it))
+        it.addDelegate(ProgressControllerDelegate(it))
+        it.addDelegate(ButtonControllersDelegate(it))
     }
 
     fun playVideo(videoPath: String) {
